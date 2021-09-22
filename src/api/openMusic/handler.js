@@ -6,11 +6,18 @@ class MusicHandler {
   Constructor(service, validator) {
     this._service = service;
     this._validator = validator;
-    this.postNoteHandler = this.postMusicDataHandler.bind(this);
-    this.getNotesHandler = this.getMusicDataHandler.bind(this);
-    this.getNoteByIdHandler = this.getMusicDataByIdHandler.bind(this);
-    this.putNoteByIdHandler = this.putMusicDataByIdHandler.bind(this);
-    this.deleteNoteByIdHandler = this.deleteMusicDataByIdHandler.bind(this);
+    if (typeof this._service === 'undefined') {
+      console.log('SERVICE MASIH KOSONG BROOOOO');
+    }
+
+    if (typeof this._validator === 'undefined') {
+      console.log('VALIDATOR SAMA AJA KOSONG WKKWKWK');
+    }
+    this.postMusicDataHandler = this.postMusicDataHandler.bind(this);
+    this.getMusicDataHandler = this.getMusicDataHandler.bind(this);
+    this.getMusicDataByIdHandler = this.getMusicDataByIdHandler.bind(this);
+    this.putMusicDataByIdHandler = this.putMusicDataByIdHandler.bind(this);
+    this.deleteMusicDataByIdHandler = this.deleteMusicDataByIdHandler.bind(this);
   }
 
   async postMusicDataHandler(request, h) {

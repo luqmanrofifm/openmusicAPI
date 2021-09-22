@@ -3,7 +3,7 @@ require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 const openMusic = require('./api/openMusic');
 const MusicService = require('./services/postgres/MusicService');
-const NotesValidator = require('./validator/notes');
+const OpenMusicValidator = require('./validator/openmusic');
 
 const init = async () => {
   const musicService = new MusicService();
@@ -22,7 +22,7 @@ const init = async () => {
     plugin: openMusic,
     options: {
       service: musicService,
-      validator: NotesValidator,
+      validator: OpenMusicValidator,
     },
   });
   await server.start();
