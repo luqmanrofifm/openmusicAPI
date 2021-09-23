@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
-const { mapDBToModel } = require('../../utils');
+const { mapDBToModel, mapAllDBToModel } = require('../../utils');
 
 class OpenMusicService {
   constructor() {
@@ -33,7 +33,7 @@ class OpenMusicService {
   }
 
   async getMusicData() {
-    const result = await this._pool.query('SELECT * FROM songs');
+    const result = await this._pool.query('SELECT id, title, performer FROM songs');
     return result.rows.map(mapDBToModel);
   }
 
@@ -48,7 +48,7 @@ class OpenMusicService {
       throw new NotFoundError('Data musik tidak ditemukan');
     }
 
-    return result.rows.map(mapDBToModel)[0];
+    return result.rows.map(mapAllDBToModel)[0];
   }
 
   async editMusicDataById(id, {

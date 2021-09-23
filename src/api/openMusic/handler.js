@@ -3,16 +3,9 @@
 const ClientError = require('../../exceptions/ClientError');
 
 class MusicHandler {
-  Constructor(service, validator) {
+  constructor(service, validator) {
     this._service = service;
     this._validator = validator;
-    if (typeof this._service === 'undefined') {
-      console.log('SERVICE MASIH KOSONG BROOOOO');
-    }
-
-    if (typeof this._validator === 'undefined') {
-      console.log('VALIDATOR SAMA AJA KOSONG WKKWKWK');
-    }
     this.postMusicDataHandler = this.postMusicDataHandler.bind(this);
     this.getMusicDataHandler = this.getMusicDataHandler.bind(this);
     this.getMusicDataByIdHandler = this.getMusicDataByIdHandler.bind(this);
@@ -22,7 +15,16 @@ class MusicHandler {
 
   async postMusicDataHandler(request, h) {
     try {
-      this._validator.validateMusicDataPayload(request.payload);
+      try {
+        this._validator.validateMusicDataPayload(request.payload);
+      } catch (error) {
+        const response = h.response({
+          status: 'fail',
+          message: 'Maaf, request tidak sesuai.',
+        });
+        response.code(400);
+        return response;
+      }
       const {
         title, year, performer, genre, duration,
       } = request.payload;
@@ -60,23 +62,23 @@ class MusicHandler {
   }
 
   async getMusicDataHandler() {
-    const musicData = await this._service.getMusicData();
+    const songs = await this._service.getMusicData();
     return {
       status: 'success',
       data: {
-        musicData,
+        songs,
       },
     };
   }
 
   async getMusicDataByIdHandler(request, h) {
     try {
-      const { id } = request.params;
-      const musicData = await this._service.getMusicDataById(id);
+      const { songId } = request.params;
+      const song = await this._service.getMusicDataById(songId);
       return {
         status: 'success',
         data: {
-          musicData,
+          song,
         },
       };
     } catch (error) {
@@ -102,12 +104,21 @@ class MusicHandler {
 
   async putMusicDataByIdHandler(request, h) {
     try {
-      this._validator.validateMusicDataPayload(request.payload);
-      const { id } = request.params;
-      await this._service.editMusicDataById(id, request.payload);
+      try {
+        this._validator.validateMusicDataPayload(request.payload);
+      } catch (error) {
+        const response = h.response({
+          status: 'fail',
+          message: 'Maaf, request tidak sesuai.',
+        });
+        response.code(400);
+        return response;
+      }
+      const { songId } = request.params;
+      await this._service.editMusicDataById(songId, request.payload);
       return {
         status: 'success',
-        message: 'Catatan berhasil diperbarui',
+        message: 'lagu berhasil diperbarui',
       };
     } catch (error) {
       if (error instanceof ClientError) {
@@ -132,11 +143,11 @@ class MusicHandler {
 
   async deleteMusicDataByIdHandler(request, h) {
     try {
-      const { id } = request.params;
-      await this._service.deleteMusicDataById(id);
+      const { songId } = request.params;
+      await this._service.deleteMusicDataById(songId);
       return {
         status: 'success',
-        message: 'Catatan berhasil dihapus',
+        message: 'lagu berhasil dihapus',
       };
     } catch (error) {
       if (error instanceof ClientError) {
