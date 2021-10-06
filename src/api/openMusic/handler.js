@@ -18,19 +18,10 @@ class MusicHandler {
       try {
         this._validator.validateMusicDataPayload(request.payload);
       } catch (error) {
-        const response = h.response({
-          status: 'fail',
-          message: 'Maaf, request tidak sesuai.',
-        });
-        response.code(400);
-        return response;
+        throw new ClientError('Maaf, request tidak sesuai.');
       }
-      const {
-        title, year, performer, genre, duration,
-      } = request.payload;
-      const songId = await this._service.addMusic({
-        title, year, performer, genre, duration,
-      });
+
+      const songId = await this._service.addMusic(request.payload);
       const response = h.response({
         status: 'success',
         message: 'Lagu berhasil ditambahkan',
@@ -107,12 +98,7 @@ class MusicHandler {
       try {
         this._validator.validateMusicDataPayload(request.payload);
       } catch (error) {
-        const response = h.response({
-          status: 'fail',
-          message: 'Maaf, request tidak sesuai.',
-        });
-        response.code(400);
-        return response;
+        throw new ClientError('Maaf, request tidak sesuai.');
       }
       const { songId } = request.params;
       await this._service.editMusicDataById(songId, request.payload);
