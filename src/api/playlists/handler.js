@@ -24,16 +24,14 @@ class PlaylistHandler {
         name,
         owner: credentialId,
       });
-      /*const response = h.response({
+      const response = h.response({
         status: 'success',
         message: 'Playlist berhasil ditambahkan',
         data: {
           playlistId,
         },
-      });*/
-      const response = h.response({
-          status: 'OK',
       });
+
       response.code(201);
       return response;
     } catch (error) {
@@ -63,7 +61,7 @@ class PlaylistHandler {
       const { id: credentialId } = request.auth.credentials;
 
       await this._service.verifyPlaylistOwner(playlistId, credentialId);
-      await this._service.deletePlaylistById(playlistId);
+      await this._service.deletePlaylists(playlistId);
 
       return {
         status: 'success',
