@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable camelcase */
 
 const mapAllDBToModel = ({ inserted_at, updated_at, ...args }) => ({
   ...args,

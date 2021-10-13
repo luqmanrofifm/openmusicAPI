@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-underscore-dangle */
-
 class PlaylistHandler {
   constructor(service, validator) {
     this._service = service;

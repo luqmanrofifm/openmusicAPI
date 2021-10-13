@@ -1,6 +1,4 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable max-len */
-/* eslint-disable no-underscore-dangle */
 
 const ClientError = require('../../exceptions/ClientError');
 
