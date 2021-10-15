@@ -1,4 +1,3 @@
-
 const {
   PostAuthenticationPayloadSchema,
   PutAuthenticationPayloadSchema,

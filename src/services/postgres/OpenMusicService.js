@@ -1,4 +1,3 @@
-
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
@@ -29,8 +28,8 @@ class OpenMusicService {
   }
 
   async getMusicData() {
-    const result = await this._pool.query('SELECT id, title, performer FROM songs');
-    return result.rows;
+    const { rows } = await this._pool.query('SELECT id, title, performer FROM songs');
+    return rows;
   }
 
   async getMusicDataById(id) {
@@ -40,7 +39,7 @@ class OpenMusicService {
     };
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Data musik tidak ditemukan');
     }
 

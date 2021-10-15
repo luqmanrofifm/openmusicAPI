@@ -1,4 +1,3 @@
-
 const InvariantError = require('../../exceptions/InvariantError');
 const { CollaborationPayloadSchema } = require('./schema');
 

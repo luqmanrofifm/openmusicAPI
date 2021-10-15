@@ -1,4 +1,3 @@
-
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 
@@ -98,7 +97,7 @@ class PlaylistsService {
 
   async verifyPlaylistOwner(id, owner) {
     const query = {
-      text: 'SELECT * FROM playlists WHERE id = $1',
+      text: 'SELECT owner FROM playlists WHERE id = $1',
       values: [id],
     };
 

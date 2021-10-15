@@ -13,7 +13,6 @@
     "rules": {
         "linebreak-style":"off",
         "no-underscore-dangle":"off",
-        "camelcase":"off",
-        
+        "camelcase":"off"        
     }
 }

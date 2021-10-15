@@ -13,12 +13,7 @@ class MusicHandler {
 
   async postMusicDataHandler(request, h) {
     try {
-      try {
-        this._validator.validateMusicDataPayload(request.payload);
-      } catch (error) {
-        throw new ClientError('Maaf, request tidak sesuai.');
-      }
-
+      this._validator.validateMusicDataPayload(request.payload);
       const songId = await this._service.addMusic(request.payload);
       const response = h.response({
         status: 'success',
@@ -93,11 +88,7 @@ class MusicHandler {
 
   async putMusicDataByIdHandler(request, h) {
     try {
-      try {
-        this._validator.validateMusicDataPayload(request.payload);
-      } catch (error) {
-        throw new ClientError('Maaf, request tidak sesuai.');
-      }
+      this._validator.validateMusicDataPayload(request.payload);
       const { songId } = request.params;
       await this._service.editMusicDataById(songId, request.payload);
       return {

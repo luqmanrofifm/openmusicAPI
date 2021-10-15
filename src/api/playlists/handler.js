@@ -11,11 +11,11 @@ class PlaylistHandler {
     this.deleteSongFromPlaylistHandler = this.deleteSongFromPlaylistHandler.bind(this);
   }
 
-  async postPlaylistHandler(request, h) {
+  async postPlaylistHandler({ payload, auth }, h) {
     try {
-      this._validator.validatePlaylistPayload(request.payload);
-      const { name } = request.payload;
-      const { id: credentialId } = request.auth.credentials;
+      this._validator.validatePlaylistPayload(payload);
+      const { name } = payload;
+      const { id: credentialId } = auth.credentials;
 
       const playlistId = await this._service.addPlaylist({
         name,
